@@ -1,0 +1,24 @@
+{
+  "name": "libs",
+  "authors": [
+    "ReyPena <zonickblack@gmail.com>"
+  ],
+  "description": "General Libraries",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.8",
+    "angular-ui-router": "~0.2.15",
+    "Materialize": "materialize#~0.97.3"
+  }
+}
