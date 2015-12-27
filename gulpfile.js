@@ -9,16 +9,18 @@ var gulp = require("gulp")
 var paths = {
   // views and html files
   htmlTemplates: [
-    "./core/client/app/views/**"
+    "./core/client/app/views/**",
+    "!./core/client/app/views/**/*.css"
   ],
   // js libraries
   jsLibs: [
     // this are the libraries
+    "./bower_components/jquery/dist/jquery.min.js",
     "./bower_components/angular/angular.min.js",
     "./bower_components/angular-ui-router/release/angular-ui-router.min.js",
-    "./bower_components/jquery/dist/jquery.min.js",
     "./bower_components/Materialize/dist/js/materialize.min.js",
     // this is my own js
+    "./core/client/app/app.js",
     "./core/client/app/**/*.js"
   ],
   // css libraries
@@ -26,35 +28,36 @@ var paths = {
     // this is my external css
     "./bower_components/Materialize/dist/css/materialize.min.css",
     // this is my own css
-    "./core/app/**/*.css"
+    "./core/client/app/**/*.css"
   ]
 };
 
-gulp.task("clean", function() {
-    del(['./public/views']);
+gulp.task('clean', function () {
+  return del("public/views/**");
 });
 
-gulp.task("copyViews", ["clean"], function () {
+gulp.task("copyViews", ["clean"], function(){
   gulp.src(paths.htmlTemplates)
-  .pipe(gulp.dest("./public/views"))
+    .pipe(gulp.dest("./public/views"));
 });
 
 gulp.task("styles", function () {
   gulp.src(paths.cssLibs)
-  .pipe(uglifyCss())
-  .pipe(concat("styles.css"))
-  .pipe(gulp.dest("./public/assets/css"));
+    .pipe(uglifyCss())
+    .pipe(concat("styles.css"))
+    .pipe(gulp.dest("./public/assets/css"));
 });
 
 gulp.task("scripts", function () {
   gulp.src(paths.jsLibs)
-  .pipe(ngAnnotate())
-  .pipe(concat("bigpack.js"))
-  .pipe(uglify())
-  .pipe(gulp.dest("./public/scripts"));
+    .pipe(ngAnnotate())
+    .pipe(concat("bigpack.js"))
+    .pipe(uglify())
+    .pipe(gulp.dest("./public/scripts"));
 });
 
 gulp.task("watch", function() {
+  gulp.watch("gulpfile.js", ["default"]);
   gulp.watch(paths.jsLibs, ['scripts']);
   gulp.watch(paths.cssLibs, ["styles"]);
   gulp.watch(paths.htmlTemplates, ["copyViews"]);

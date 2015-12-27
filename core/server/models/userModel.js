@@ -1,24 +1,38 @@
-var mongoose = require("mongoose");
-  // bcrypt = require("bcryptjs");
+var mongoose = require("mongoose")
+  , bcrypt = require("bcryptjs");
 
-var schema = new mongoose.Schema({
-  email:{type: String, required:false},
-  password: {type:String, required:false},
+var User = new mongoose.Schema({
+  email: {type: String},
+  pasword:{type: String},
   name: {
-    firstName: {type: String, required: false},
-    lastName: {type: String, required:false}
+    firstName: {type: String},
+    lastName: {type: String}
   },
-  username:{type: String, required:false},
-  age:{type: Number},
-  sudo:{type: Boolean, default: false}
-  // google: {},
-  // facebook: {},
-  // twiter: {}
+  phoneNum: {type: Number},
+  age: {type: Number},
+  createdOn: {type: Date},
+  permissions: {
+    isSudo: {type: Boolean, required: true, default: false},
+    isModerator: {type: Boolean, required: true, default: false}
+  }
 });
 
-// schema.methods.verifyPassword = function (reqBodyPassword) {
-//   var user = this.local;
-//   return bcrypt.compareSync(reqBodyPassword, user.password);
-// };
+User.pre("save", function(next){
+  var user = this;
 
-module.exports = mongoose.model("User", schema);
+  if(!user.isModified("pasword")){
+    return next();
+  }
+
+  var salt = bcrypt.genSaltSync(11);
+  var hash = bcrypt.hashSync(user.pasword, salt);
+  user.pasword = hash;
+  return next(null, user);
+});
+
+User.methods.verifyPassword = function (reqBodyPassword) {
+  var user = this;
+  return bcrypt.compareSync(reqBodyPassword, user.pasword);
+};
+
+module.exports = mongoose.model("User", User);

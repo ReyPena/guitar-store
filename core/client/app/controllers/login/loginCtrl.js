@@ -1,0 +1,3 @@
+angular.module("guitarStore").controller("loginCtrl", function ($scope) {
+  // body...
+});

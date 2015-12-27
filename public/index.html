@@ -4,25 +4,20 @@
   <meta charset="UTF-8">
   <title>The Store</title>
   <link rel="stylesheet" href="assets/css/styles.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body ng-controller="mainCtrl">
 
+  <menu-directive></menu-directive>
 
-  <!-- --------------------------------------------------------------------- -->
-  <div class="card-panel row">
-    <div class="col s6 offset-s10">
-      <button class="card" type="button" name="button" ng-click="login(user)">Log In</button>
-      <button class="card" type="button" name="button" ng-click="register(user)">Register</button>
-      <button class="card" ng-click="logout()">Log Out</button>
-    </div>
-  </div>
-  user <input type="text" name="name" ng-model="user.username">
-  password<input type="text" name="name" ng-model="user.password">
-
-  <div class="container">
+  <!-- <div class="container main"> -->
+  <div class="main">
      <ui-view></ui-view>
   </div>
+  <footer-directive></footer-directive>
 
   <script src="scripts/bigpack.js"></script>
+
 </body>
 </html>

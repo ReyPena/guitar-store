@@ -1,1 +1,1 @@
-var app = angular.module("guitarStore", ["ui.router"])
+angular.module("guitarStore", ["ui.router"]);

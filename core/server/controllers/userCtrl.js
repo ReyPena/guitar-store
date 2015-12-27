@@ -1,14 +1,15 @@
-var user = require("../models/userModel")
+var user = require("../models/userModel");
 
 module.exports = {
   createUser: function (req, res, next) {
     console.log("here created", req.body);
-    user.create(req.body, function (err, User) {
-      if(err){
-        return res.status(500).send(err);
-      }
-      res.send(User);
-    });
+    new User( req.body ).save(function( err, user ) {
+			if (err) {
+				res.status(500).send( err );
+			} else {
+				res.send( user );
+			}
+		});
   },
   getUser: function (req, res, next) {
     user.findById(req.params.id).then(function (err, user) {
@@ -16,10 +17,15 @@ module.exports = {
         return res.status(500).send(err);
       }
       res.send(user);
-    })
-  }
-  // deleteUser: function (req, res, next) {
-  //   // body...
-  // }
-
+    });
+  },
+  deleteUser: function( req, res ) {
+		User.findByIdAndRemove( req.query.id, function( err, user ) {
+			if (err) {
+				return res.status(500).send( err );
+			} else {
+				res.send(user);
+			}
+		});
+	}
 };

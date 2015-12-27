@@ -1,4 +1,4 @@
-app.service("authService", function ($http) {
+angular.module("guitarStore").service("authService", function ($http) {
   this.register = function (registerInfo){
     return $http({
       method: "POST",
@@ -6,7 +6,7 @@ app.service("authService", function ($http) {
       data: registerInfo
     }).then(function (result) {
       console.log("register return", result);
-    })
+    });
   };
   this.login = function (loginInfo){
     return $http({
@@ -15,7 +15,7 @@ app.service("authService", function ($http) {
       data: loginInfo
     }).then(function (result) {
       console.log("login return" , result);
-    })
+    });
   };
   this.logout =  function () {
     return $http({
@@ -23,6 +23,6 @@ app.service("authService", function ($http) {
       url: "/auth/logout"
     }).then(function (result) {
       console.log("logout");
-    })
-  }
-})
+    });
+  };
+});
